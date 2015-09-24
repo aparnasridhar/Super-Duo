@@ -2,8 +2,11 @@ package it.jaschke.alexandria.services;
 
 import android.app.IntentService;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
@@ -57,12 +60,20 @@ public class BookService extends IntentService {
         }
     }
 
+    static public boolean isNetworkAvailable(Context ct){
+        ConnectivityManager cm =
+                (ConnectivityManager)ct.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+    }
+
     /**
      * Handle action Foo in the provided background thread with the provided
      * parameters.
      */
     private void deleteBook(String ean) {
-        if(ean!=null) {
+        if(!TextUtils.isEmpty(ean)) {
             getContentResolver().delete(AlexandriaContract.BookEntry.buildBookUri(Long.parseLong(ean)), null, null);
         }
     }

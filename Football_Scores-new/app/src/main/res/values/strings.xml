@@ -38,4 +38,5 @@
     <string name="home_icon_text" >Home Icon</string>
     <string name="away_icon_text" >Away Icon</string>
     <string name="widget_title" >Football Scores</string>
+    <string name="share_button" >Share Match Score</string>
 </resources>
